@@ -1,34 +1,34 @@
 // ╔══════════════════════════════════════════════════════════════════════════════╗
-// ║  CipherNone — JWT "alg: none" Signature Bypass PoC                        ║
-// ║  ⚠  Bu dosya kasıtlı olarak zafiyetli bir API barındırır.                 ║
-// ║  ⚠  Yalnızca siber güvenlik laboratuvar ortamında kullanılmalıdır.        ║
+// ║  CipherNone — JWT "alg: none" Signature Bypass PoC                           ║
+// ║  ⚠  Bu dosya kasıtlı olarak zafiyetli bir API barındırır.                    ║
+// ║  ⚠  Yalnızca siber güvenlik laboratuvar ortamında kullanılmalıdır.           ║
 // ╚══════════════════════════════════════════════════════════════════════════════╝
 
 const express = require('express');
-const jwt     = require('jsonwebtoken');
-const app     = express();
+const jwt = require('jsonwebtoken');
+const app = express();
 
 app.use(express.json());
 
 // ─── Sabitler ────────────────────────────────────────────────────────────────
-const PORT       = 3000;
+const PORT = 3000;
 const SECRET_KEY = 'super_gizli_anahtar_123';
 
 // ─── ANSI Renk Kodları ──────────────────────────────────────────────────────
 const C = {
-  reset:   '\x1b[0m',
-  bright:  '\x1b[1m',
-  red:     '\x1b[31m',
-  green:   '\x1b[32m',
-  yellow:  '\x1b[33m',
-  blue:    '\x1b[34m',
+  reset: '\x1b[0m',
+  bright: '\x1b[1m',
+  red: '\x1b[31m',
+  green: '\x1b[32m',
+  yellow: '\x1b[33m',
+  blue: '\x1b[34m',
   magenta: '\x1b[35m',
-  cyan:    '\x1b[36m',
-  white:   '\x1b[37m',
-  bgRed:   '\x1b[41m',
+  cyan: '\x1b[36m',
+  white: '\x1b[37m',
+  bgRed: '\x1b[41m',
   bgGreen: '\x1b[42m',
-  bgBlue:  '\x1b[44m',
-  dim:     '\x1b[2m',
+  bgBlue: '\x1b[44m',
+  dim: '\x1b[2m',
 };
 
 // ─── Yardımcı: Renkli Log ───────────────────────────────────────────────────
@@ -74,8 +74,8 @@ app.post('/login', (req, res) => {
   });
 
   log('✅', C.green, '[LOGIN]', `Token başarıyla oluşturuldu.`);
-  log('📦', C.blue,  '[LOGIN]', `Payload  → ${C.yellow}${JSON.stringify(payload)}${C.reset}`);
-  log('🔐', C.blue,  '[LOGIN]', `Algoritma → ${C.yellow}HS256${C.reset}`);
+  log('📦', C.blue, '[LOGIN]', `Payload  → ${C.yellow}${JSON.stringify(payload)}${C.reset}`);
+  log('🔐', C.blue, '[LOGIN]', `Algoritma → ${C.yellow}HS256${C.reset}`);
   log('📤', C.green, '[LOGIN]', `Token gönderildi.`);
 
   console.log(`${C.dim}${'─'.repeat(62)}${C.reset}`);
@@ -134,11 +134,11 @@ function verifyToken(req, res, next) {
   // ──────────────────────────────────────────────────────────────────────────
   const decoded = jwt.decode(token, { complete: true });
 
-  if (!decoded) {
-    log('❌', C.red, '[AUTH]', 'Token decode edilemedi! Geçersiz format.');
-    return res.status(401).json({
+  if (!decoded || !decoded.header || !decoded.payload) {
+    log('❌', C.red, '[AUTH]', 'Token decode edilemedi! Geçersiz veya bozuk token formatı.');
+    return res.status(400).json({
       success: false,
-      message: 'Geçersiz token formatı.',
+      message: 'Bozuk token formatı. Token header veya payload okunamadı.',
     });
   }
 
