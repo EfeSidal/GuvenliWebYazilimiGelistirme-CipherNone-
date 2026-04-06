@@ -1,0 +1,24 @@
+version: '3.8'
+
+services:
+  vulnerable-api:
+    build: .
+    container_name: ciphernone_vulnerable
+    ports:
+      - "3000:3000"
+    # Varsayılan CMD'yi ezip vulnerable_api.js dosyasını çalıştırıyoruz
+    command: ["node", "src/vulnerable_api.js"]
+    environment:
+      - NODE_ENV=production
+    restart: unless-stopped
+
+  secure-api:
+    build: .
+    container_name: ciphernone_secure
+    ports:
+      - "3001:3001"
+    # Dockerfile içerisinde varsayılan olarak secure_api.js tanımlı olduğu için 
+    # ek bir command belirtmeye gerek yok. Ancak açıkça yazılabilir.
+    environment:
+      - NODE_ENV=production
+    restart: unless-stopped
