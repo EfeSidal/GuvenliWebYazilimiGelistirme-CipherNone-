@@ -38,10 +38,13 @@ Projede JWT güvenlik mekanizmalarını doğrulamak için Jest + Supertest ile 4
 ![Security Test 3](screenshots/test3.png)
 ![Security Test 4 - Jest Summary](screenshots/test4.png)
 
-### 🎬 Demo
-Aşağıda, CipherNone laboratuvarının tüm özelliklerini içeren interaktif dashboard demosu yer almaktadır. Bu demo; zafiyetli API üzerindeki `alg:none` saldırısını, güvenli API'nin bu saldırıyı nasıl engellediğini ve Refresh Token rotasyonunu görsel olarak sunar.
+### 🎬 Demo (İnteraktif Galeri)
+CipherNone laboratuvarının tüm özelliklerini, zafiyetli API üzerindeki `alg:none` saldırısını ve RS256 hardening savunmasını adım adım inceleyebileceğiniz **interaktif galeriye** aşağıdan ulaşabilirsiniz.
 
-![CipherNone Dashboard Demo](./demo/project-demo.webp)
+[![CipherNone Dashboard Preview](./demo/screenshots/step0_landing.png)](./demo/WALKTHROUGH.md)
+
+> [!TIP]
+> **[Tam Ekran İnteraktif Demo Galerisine Git (Frame-by-Frame Walkthrough) ➡️](./demo/WALKTHROUGH.md)**
 
 ---
 
@@ -91,10 +94,13 @@ node src/secure_api.js
 
 ![Security Test Coverage](screenshots/test4.png)
 
-### 🎬 Demo
-Below is a comprehensive demo of the interactive CipherNone Dashboard. It showcases the `alg:none` exploit on the vulnerable API, the defense mechanisms of the secure API, and the Refresh Token rotation flow.
+### 🎬 Demo (Interactive Gallery)
+Explore all CipherNone features, including the `alg:none` exploit on the vulnerable API and RS256 hardening defense, through our **frame-by-frame interactive gallery**.
 
-![CipherNone Dashboard Demo](./demo/project-demo.webp)
+[![CipherNone Dashboard Preview](./demo/screenshots/step0_landing.png)](./demo/WALKTHROUGH.md)
+
+> [!TIP]
+> **[View the Full Interactive Demo Gallery ➡️](./demo/WALKTHROUGH.md)**
 
 ---
 

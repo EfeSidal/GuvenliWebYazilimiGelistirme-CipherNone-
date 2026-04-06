@@ -82,7 +82,7 @@ app.post('/refresh', (req, res) => {
   // 2. Kriptografik doğrulama
   try {
     const decoded = jwt.verify(refreshToken, REFRESH_TOKEN_SECRET);
-    
+
     // Sadece gerekli alanları alarak yeni access token üret
     const newAccessToken = generateAccessToken({ user: decoded.user, role: decoded.role });
 
@@ -138,7 +138,7 @@ function verifyAccessToken(req, res, next) {
 // ═══════════════════════════════════════════════════════════════════════════════
 app.get('/admin', verifyAccessToken, (req, res) => {
   log('🏆', C.bgGreen + C.white, '[ADMIN]', `Admin paneline erişim: ${req.user.user}`);
-  
+
   return res.json({
     success: true,
     message: '🎉 Tebrikler! Refresh Token sistemi ile korunan admin paneline eriştiniz.',
