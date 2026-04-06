@@ -17,3 +17,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Kod Kalitesi Artışı**: Konsol renk kodları ve loglama algoritmaları merkezi bir `src/logger.js` dosyasında birleştirilerek kod satır sayıları optimize edildi.
 - **Geliştirici İyileştirmeleri**: Eksik olan JSDoc yorum blokları projeye eklendi ve tüm scriptlerin okunabilirliği artırıldı. `secure_api.js` ve `exploit.js` içlerine profesyonel TODO/FIXME yorumları gömüldü.
 - **Konfigürasyon (package.json)**: `main` alanı artık index.js yerine `src/vulnerable_api.js` olarak güncellendi. `scripts` kısmına `start:vulnerable` ve `start:secure` komutları eklendi.
+
+## [1.0.0] - 2026-04-05
+
+### Added
+- **Initial Release (İlk Sürüm)**: JWT "alg: none" zafiyetini (CWE-327) gösteren temel PoC (Proof of Concept) laboratuvar ortamı oluşturuldu.
+- `vulnerable_api.js`: Kasıtlı olarak imzasız tokenleri kabul eden ve "admin" yetkisi veren zayıf API.
+- `secure_api.js`: Zero-Trust mantığıyla sadece HS256 algoritmasını kabul eden yamalı API.
+- `exploit.js`: Herhangi bir kütüphane kullanmadan sahte Base64Url JWT üreten PoC saldırı scripti.
+- Laboratuvarın kullanımını açıklayan kapsamlı İngilizce ve Türkçe `README.md` dokümantasyonu.
