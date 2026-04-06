@@ -77,4 +77,86 @@ describe('Secure API - Security Mechanisms Tests', () => {
     expect(response.body.message).toMatch(/Yetersiz yetki/i);
   });
 
+  // ───────────────────────────────────────────────────────────────────────────
+  // YENİ EKSTRAGÜVENLİK TESTLERİ (Manuel Token İnşası)
+  // ───────────────────────────────────────────────────────────────────────────
+
+  // Manuel Base64Url Encode Yardımcısı
+  const base64url = (obj) => {
+    return Buffer.from(JSON.stringify(obj)).toString('base64url');
+  };
+
+  // 5. alg: "NONE" (Büyük Harf)
+  it('alg: "NONE" Saldırısı: Büyük harf "NONE" varyasyonu reddedilmelidir (403)', async () => {
+    const header = base64url({ alg: 'NONE', typ: 'JWT' });
+    const payload = base64url(ADMIN_PAYLOAD);
+    const attackToken = `${header}.${payload}.`;
+
+    const response = await request(app)
+      .get('/admin')
+      .set('Authorization', `Bearer ${attackToken}`);
+
+    expect(response.status).toBe(403);
+  });
+
+  // 6. alg: "NoNe" (Mixed Case)
+  it('alg: "NoNe" Saldırısı: Karışık harf "NoNe" varyasyonu reddedilmelidir (403)', async () => {
+    const header = base64url({ alg: 'NoNe', typ: 'JWT' });
+    const payload = base64url(ADMIN_PAYLOAD);
+    const attackToken = `${header}.${payload}.`;
+
+    const response = await request(app)
+      .get('/admin')
+      .set('Authorization', `Bearer ${attackToken}`);
+
+    expect(response.status).toBe(403);
+  });
+
+  // 7. alg: "none " (Boşluk İçeren)
+  it('alg: "none " Saldırısı: Sondü boşluk içeren "none " varyasyonu reddedilmelidir (403)', async () => {
+    const header = base64url({ alg: 'none ', typ: 'JWT' });
+    const payload = base64url(ADMIN_PAYLOAD);
+    const attackToken = `${header}.${payload}.`;
+
+    const response = await request(app)
+      .get('/admin')
+      .set('Authorization', `Bearer ${attackToken}`);
+
+    expect(response.status).toBe(403);
+  });
+
+  // 8. Süresi Dolmuş Token (exp claim)
+  it('Süresi Dolmuş Token: exp claimi geçmiş tarihte olan token 401 dönmelidir', async () => {
+    // 1 saat önce süresi dolmuş bir payload oluştur
+    const expiredPayload = {
+      ...ADMIN_PAYLOAD,
+      exp: Math.floor(Date.now() / 1000) - 3600
+    };
+
+    // Geçerli private key ile imzala ama süresi geçmiş olsun
+    const token = jwt.sign(expiredPayload, PRIVATE_KEY, { algorithm: 'RS256' });
+
+    const response = await request(app)
+      .get('/admin')
+      .set('Authorization', `Bearer ${token}`);
+
+    // Beklenen: 401 Unauthorized (Daha önce 403 dönüyordu)
+    expect(response.status).toBe(401);
+    expect(response.body.success).toBe(false);
+    expect(response.body.error).toBe('TokenExpiredError');
+  });
+
+  // 9. Eksik alg Field
+  it('Eksik alg Field: Headerda alg alanı bulunmayan token reddedilmelidir (403)', async () => {
+    const header = base64url({ typ: 'JWT' }); // alg yok
+    const payload = base64url(ADMIN_PAYLOAD);
+    const attackToken = `${header}.${payload}.`;
+
+    const response = await request(app)
+      .get('/admin')
+      .set('Authorization', `Bearer ${attackToken}`);
+
+    expect(response.status).toBe(403);
+  });
+
 });

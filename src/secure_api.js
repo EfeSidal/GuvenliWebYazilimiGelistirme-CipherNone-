@@ -230,6 +230,16 @@ function verifyTokenSecure(req, res, next) {
 
     console.log(`${C.dim}${'─'.repeat(62)}${C.reset}`);
 
+    // EXPIRED TOKEN: 401 Unauthorized
+    if (err.name === 'TokenExpiredError') {
+      return res.status(401).json({
+        success: false,
+        message: 'Token süresi dolmuş!',
+        error: 'TokenExpiredError',
+      });
+    }
+
+    // OTHER VERIFICATION FAILURES: 403 Forbidden
     return res.status(403).json({
       success: false,
       message: 'Geçersiz veya manipüle edilmiş token!',
