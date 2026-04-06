@@ -5,6 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.0] - 2026-04-06
+
+### Added
+- **Unit Tests**: Unit test suite for JWT bypass scenarios.
+- **Rate Limiting**: Brute-force protection layer (Rate Limiting).
+- **HTTPS/TLS**: End-to-end encryption with HTTPS/TLS.
+
+### Changed
+- **CI/CD**: Updated `security-scan.yml` pipeline to include automated testing.
+
 ## [1.1.0] - 2026-04-06
 
 ### Added

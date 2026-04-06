@@ -16,6 +16,16 @@ Bu projede saldırgan, JWT'nin header kısmındaki algoritmayı `alg: none` olar
 * **`exploit.js` (Silah):** Herhangi bir kütüphane kullanmadan, tamamen sıfırdan sahte bir Base64Url JWT üreten ve kurban API'ye "Admin" yetkisiyle sızan saldırı scripti.
 * **`secure_api.js` (Zırh):** Zero-Trust prensibiyle yazılmış, sadece `HS256` algoritmasını kabul eden ve sahte token'ları anında reddeden yamalı (Hardened) API (Port: 3001).
 
+### 🛡️ Gelişmiş Güvenlik Özellikleri (Advanced Security Features)
+* **Unit Tests**: Jest ve Supertest ile otomatik güvenlik doğrulama testleri entegre edildi.
+* **Rate Limiting**: `express-rate-limit` ile Brute-Force saldırılarına karşı koruma katmanı eklendi.
+* **HTTPS/TLS**: Tüm trafik Self-Signed SSL sertifikası ile uçtan uca şifrelendi.
+
+### 🧪 Güvenlik Testlerini Çalıştırma
+Uygulamanın şifreleme ve yetki güvenliklerini denetleyen otomatik test takımını koşturmak için:
+```bash
+npm test
+```
 ### 🛠 Kullanım (PoC)
 
 **1. Zafiyetli Sunucuyu Başlatın:**
@@ -55,6 +65,16 @@ In this project, an attacker performs an Authentication Bypass by changing the a
   * **`exploit.js` (The Weapon):** An attack script that generates a forged Base64Url JWT entirely from scratch without any external libraries, bypassing the victim API with "Admin" privileges.
   * **`secure_api.js` (The Armor):** A hardened API built on Zero-Trust principles that strictly enforces the `HS256` algorithm and instantly rejects forged tokens (Port: 3001).
 
+### 🛡️ Advanced Security Features
+* **Unit Tests**: Automated security validation tests integrated using Jest and Supertest.
+* **Rate Limiting**: Brute-force protection layer added via `express-rate-limit`.
+* **HTTPS/TLS**: All traffic is end-to-end encrypted using a Self-Signed SSL certificate.
+
+### 🧪 Running Automated Tests
+To run the automated security tests verifying JWT protections and logic:
+```bash
+npm test
+```
 ### 🛠 Usage (PoC)
 
 **1. Start the Vulnerable Server:**
