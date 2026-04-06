@@ -46,15 +46,27 @@ Projede JWT güvenlik mekanizmalarını doğrulamak için Jest + Supertest ile 4
 - Short-lived access token + Refresh token sistemi
 - Rate limiting’in production seviyesinde yapılandırılması
 - Daha gelişmiş logging ve monitoring (Winston + Prometheus gibi)
-- Multi-stage Docker build ve non-root user kullanımı
+- multi-stage Docker build ve non-root user kullanımı
 - Gerçek SSL sertifikası (Let’s Encrypt) entegrasyonu
+
+### 🔄 Refresh Token Sistemi (Yeni!)
+Modern uygulamalarda güvenliği artırmak için eklenen **Refresh Token** demosu (`src/refresh_token_demo.js`):
+- **Access Token (15 dk)**: Kısa ömürlü, her istekte gönderilen token.
+- **Refresh Token (7 gün)**: Uzun ömürlü, sadece yeni Access Token almak için kullanılan token.
+- **Revocation (Blacklist)**: Kullanıcı çıkış yaptığında (`/logout`), ilgili refresh token kara listeye alınır ve bir daha kullanılamaz.
+
+**Demosunu Başlatmak İçin:**
+```bash
+node src/refresh_token_demo.js
+```
+*(Port: 3002)*
 
 ### 🛠 Kullanım (PoC)
 
 **1. Zafiyetli Sunucuyu Başlatın:**
 ```bash
 node vulnerable_api.js
-````
+```
 
 **2. Silahı Ateşleyin (Saldırı Aşaması):**
 
