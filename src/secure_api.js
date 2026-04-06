@@ -269,7 +269,8 @@ app.get('/', (req, res) => {
 // ═══════════════════════════════════════════════════════════════════════════════
 // SUNUCU BAŞLAT
 // ═══════════════════════════════════════════════════════════════════════════════
-app.listen(PORT, () => {
+if (require.main === module) {
+  app.listen(PORT, () => {
   banner();
 
   console.log(`${C.green}${C.bright}  ✅ Güvenli sunucu başlatıldı!${C.reset}`);
@@ -289,4 +290,7 @@ app.listen(PORT, () => {
   console.log();
   console.log(`${C.dim}${'═'.repeat(62)}${C.reset}`);
   console.log();
-});
+  });
+}
+
+module.exports = app;
