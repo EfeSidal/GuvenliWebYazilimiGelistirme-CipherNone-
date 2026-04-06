@@ -15,31 +15,8 @@ const PORT = 3001;
 const SECRET_KEY = 'super_gizli_anahtar_123';
 const ALLOWED_ALGORITHMS = ['HS256']; // Zero-Trust: Sadece bu algoritmaya güven
 
-// ─── ANSI Renk Kodları ──────────────────────────────────────────────────────
-const C = {
-  reset: '\x1b[0m',
-  bright: '\x1b[1m',
-  dim: '\x1b[2m',
-  red: '\x1b[31m',
-  green: '\x1b[32m',
-  yellow: '\x1b[33m',
-  blue: '\x1b[34m',
-  magenta: '\x1b[35m',
-  cyan: '\x1b[36m',
-  white: '\x1b[37m',
-  bgRed: '\x1b[41m',
-  bgGreen: '\x1b[42m',
-  bgYellow: '\x1b[43m',
-  bgCyan: '\x1b[46m',
-};
-
-// ─── Yardımcı: Renkli Log ───────────────────────────────────────────────────
-function log(icon, color, label, message) {
-  const timestamp = new Date().toLocaleTimeString('tr-TR');
-  console.log(
-    `${C.dim}[${timestamp}]${C.reset} ${icon}  ${color}${C.bright}${label}${C.reset} ${message}`
-  );
-}
+// ─── Logger Modülü ────────────────────────────────────────────────────────────
+const { C, log } = require('./logger');
 
 function banner() {
   console.log(`
@@ -113,6 +90,17 @@ app.post('/login', (req, res) => {
 //   - Token alg:none dese bile, sunucu HS256 ile verify etmeye çalışır
 //   - İmza olmadığı için verify BAŞARISIZ olur → saldırı engellenir
 // ═══════════════════════════════════════════════════════════════════════════════
+// TODO: Rate limiting mekanizması (express-rate-limit) entegrasyonunu tamamla, brute-force koruması sağlansın.
+// FIXME: Kimlik ve yetki rollerini daha merkezi bir policy module'üne taşı (Role-based erişim kontrolü).
+/**
+ * JSON Web Token (JWT) kimlik doğrulamasını sağlayan güvenli middleware.
+ * @description Bu middleware imza doğrulaması için sadece `HS256` algoritmasına izin verir ve `alg: none` ataklarını otomatik reddeder.
+ * 
+ * @param {import('express').Request} req - Express istek nesnesi.
+ * @param {import('express').Response} res - Express yanıt nesnesi.
+ * @param {import('express').NextFunction} next - Sonraki middleware işlevi.
+ * @returns {void}
+ */
 function verifyTokenSecure(req, res, next) {
   const authHeader = req.headers['authorization'];
 

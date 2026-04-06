@@ -14,30 +14,8 @@ app.use(express.json());
 const PORT = 3000;
 const SECRET_KEY = 'super_gizli_anahtar_123';
 
-// ─── ANSI Renk Kodları ──────────────────────────────────────────────────────
-const C = {
-  reset: '\x1b[0m',
-  bright: '\x1b[1m',
-  red: '\x1b[31m',
-  green: '\x1b[32m',
-  yellow: '\x1b[33m',
-  blue: '\x1b[34m',
-  magenta: '\x1b[35m',
-  cyan: '\x1b[36m',
-  white: '\x1b[37m',
-  bgRed: '\x1b[41m',
-  bgGreen: '\x1b[42m',
-  bgBlue: '\x1b[44m',
-  dim: '\x1b[2m',
-};
-
-// ─── Yardımcı: Renkli Log ───────────────────────────────────────────────────
-function log(icon, color, label, message) {
-  const timestamp = new Date().toLocaleTimeString('tr-TR');
-  console.log(
-    `${C.dim}[${timestamp}]${C.reset} ${icon}  ${color}${C.bright}${label}${C.reset} ${message}`
-  );
-}
+// ─── Logger Modülü ────────────────────────────────────────────────────────────
+const { C, log } = require('./logger');
 
 function banner() {
   console.log(`
@@ -110,6 +88,15 @@ app.post('/login', (req, res) => {
 //   2. Base64URL( {"user":"hacker","role":"admin"} ) → payload
 //   3. header.payload. (imza boş, sadece nokta) → sahte token
 // ═══════════════════════════════════════════════════════════════════════════════
+/**
+ * JSON Web Token (JWT) kimlik doğrulamasını işleyen middleware.
+ * @warning DİKKAT: Gösterim amaçlı olarak bilinçli zafiyet içerir. `alg: none` başlık değerleri kontrol edilmez.
+ * 
+ * @param {import('express').Request} req - Express istek nesnesi.
+ * @param {import('express').Response} res - Express yanıt nesnesi.
+ * @param {import('express').NextFunction} next - Sonraki middleware işlevi.
+ * @returns {void}
+ */
 function verifyToken(req, res, next) {
   const authHeader = req.headers['authorization'];
 
