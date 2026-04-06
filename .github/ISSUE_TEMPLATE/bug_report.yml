@@ -1,0 +1,55 @@
+name: "🐞 Bug Report"
+description: "Found a problem in CipherNone? Report it here."
+title: "[BUG] <Title of the bug>"
+labels: ["bug", "triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ### 🛡️ CipherNone Bug Report
+        Thank you for reporting! Please provide as much detail as possible to help us fix it.
+
+  - type: input
+    id: environment
+    attributes:
+      label: "Environment"
+      description: "Example: Windows 10, Node.js v20.x"
+      placeholder: "OS: <OS>, Node: <Version>"
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: "Reproduction Steps"
+      description: "How can we reproduce this bug? (e.g., node src/vulnerable_api.js, then curl...)"
+      placeholder: |
+        1. Start the server with `node ...`
+        2. Run the command `curl ...`
+        3. See identifying error in logs
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: "Expected Behavior"
+      description: "What did you expect to happen?"
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: "Actual Behavior"
+      description: "What actually happened? (Include error messages/logs)"
+    validations:
+      required: true
+
+  - type: textarea
+    id: context
+    attributes:
+      label: "Additional Context"
+      description: "Add any other context, screenshots, or logs about the problem here."
+    validations:
+      required: false
