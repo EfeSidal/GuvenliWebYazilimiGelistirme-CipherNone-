@@ -25,6 +25,12 @@ Bu projede saldırgan, JWT'nin header kısmındaki algoritmayı `alg: none` olar
 * **Rate Limiting**: `express-rate-limit` ile Brute-Force saldırılarına karşı koruma katmanı eklendi.
 * **HTTPS/TLS**: Tüm trafik Self-Signed SSL sertifikası ile uçtan uca şifrelendi.
 
+## 🎬 Demo
+
+Projenin çalışma anını, exploit sürecini ve güvenli API'nin saldırıyı engellediğini aşağıdaki videodan izleyebilirsiniz:
+
+[![Demo Video](https://img.youtube.com/vi/Vk-bpNAXWIc/maxresdefault.jpg)](https://youtu.be/Vk-bpNAXWIc)
+
 ### 📊 Test Kapsamı
 Projede JWT güvenlik mekanizmalarını doğrulamak için Jest + Supertest ile 4 adet otomatik test yazıldı.
 
@@ -85,6 +91,12 @@ node src/secure_api.js
 * **`vulnerable_api.js` (The Victim):** An intentionally flawed Node.js API that fails to check for "alg: none" and accepts unsigned tokens.
 * **`exploit.js` (The Weapon):** An attack script that generates a forged Base64Url JWT entirely from scratch, bypassing the victim API.
 * **`secure_api.js` (The Armor):** A hardened API built on Zero-Trust principles that strictly enforces the `RS256` algorithm.
+
+## 🎬 Demo
+
+Watch the video below to see how the project worked, the exploit process, and how the secure API prevented the attack:
+
+[![Demo Video](https://img.youtube.com/vi/Vk-bpNAXWIc/maxresdefault.jpg)](https://youtu.be/Vk-bpNAXWIc)
 
 ### 📊 Test Coverage
 - ✅ Accessing /admin with a valid HS256 admin token
