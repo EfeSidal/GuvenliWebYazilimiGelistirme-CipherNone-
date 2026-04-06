@@ -7,6 +7,9 @@
 const express = require('express');
 const jwt = require('jsonwebtoken');
 const rateLimit = require('express-rate-limit');
+const fs = require('fs');
+const https = require('https');
+const path = require('path');
 const app = express();
 
 app.use(express.json());
@@ -107,6 +110,7 @@ app.post('/login', (req, res) => {
 //   - İmza olmadığı için verify BAŞARISIZ olur → saldırı engellenir
 // ═══════════════════════════════════════════════════════════════════════════════
 // ✅ Rate Limiting aktif edildi
+// ✅ HTTPS/TLS Şifreleme aktif edildi
 // FIXME: Kimlik ve yetki rollerini daha merkezi bir policy module'üne taşı (Role-based erişim kontrolü).
 /**
  * JSON Web Token (JWT) kimlik doğrulamasını sağlayan güvenli middleware.
@@ -286,27 +290,37 @@ app.get('/', (req, res) => {
 // SUNUCU BAŞLAT
 // ═══════════════════════════════════════════════════════════════════════════════
 if (require.main === module) {
-  app.listen(PORT, () => {
-  banner();
+  // SSL Sertifikalarını Oku
+  const sslOptions = {
+    key: fs.readFileSync(path.join(__dirname, '../certs/server.key')),
+    cert: fs.readFileSync(path.join(__dirname, '../certs/server.cert')),
+  };
 
-  console.log(`${C.green}${C.bright}  ✅ Güvenli sunucu başlatıldı!${C.reset}`);
-  console.log(`${C.cyan}  🌐 Adres: ${C.bright}http://localhost:${PORT}${C.reset}`);
-  console.log();
-  console.log(`${C.yellow}  📡 Mevcut Endpoint'ler:${C.reset}`);
-  console.log(`${C.white}     POST ${C.bright}/login${C.reset}  → JWT token al (HS256)`);
-  console.log(`${C.white}     GET  ${C.bright}/admin${C.reset}  → Korumalı admin paneli`);
-  console.log();
-  console.log(`${C.dim}  ──────────────────────────────────────────────────────────${C.reset}`);
-  console.log(`${C.green}${C.bright}  🛡️  GÜVENLİK YAMALARI AKTİF:${C.reset}`);
-  console.log(`${C.green}    ✅ jwt.verify() + algorithms whitelist kullanılıyor${C.reset}`);
-  console.log(`${C.green}    ✅ alg: "none" saldırısı ENGELLENİR${C.reset}`);
-  console.log(`${C.green}    ✅ Key Confusion saldırısı ENGELLENİR${C.reset}`);
-  console.log(`${C.green}    ✅ Saldırı girişimleri loglanır${C.reset}`);
-  console.log(`${C.dim}  ──────────────────────────────────────────────────────────${C.reset}`);
-  console.log();
-  console.log(`${C.dim}${'═'.repeat(62)}${C.reset}`);
-  console.log();
+  https.createServer(sslOptions, app).listen(PORT, () => {
+    banner();
+
+    console.log(`${C.green}${C.bright}  ✅ Güvenli sunucu başlatıldı!${C.reset}`);
+    console.log(`${C.magenta}  🔒 HTTPS Şifrelemesi Aktif!${C.reset}`);
+    console.log(`${C.cyan}  🌐 Adres: ${C.bright}https://localhost:${PORT}${C.reset}`);
+    console.log();
+    console.log(`${C.yellow}  📡 Mevcut Endpoint'ler:${C.reset}`);
+    console.log(`${C.white}     POST ${C.bright}/login${C.reset}  → JWT token al (HS256)`);
+    console.log(`${C.white}     GET  ${C.bright}/admin${C.reset}  → Korumalı admin paneli`);
+    console.log();
+    console.log(`${C.dim}  ──────────────────────────────────────────────────────────${C.reset}`);
+    console.log(`${C.green}${C.bright}  🛡️  GÜVENLİK YAMALARI AKTİF:${C.reset}`);
+    console.log(`${C.green}    ✅ HTTPS Bağlantısı (TLS)${C.reset}`);
+    console.log(`${C.green}    ✅ Rate Limiting (100 req/15min)${C.reset}`);
+    console.log(`${C.green}    ✅ jwt.verify() + algorithms whitelist kullanılıyor${C.reset}`);
+    console.log(`${C.green}    ✅ alg: "none" saldırısı ENGELLENİR${C.reset}`);
+    console.log(`${C.green}    ✅ Key Confusion saldırısı ENGELLENİR${C.reset}`);
+    console.log(`${C.green}    ✅ Saldırı girişimleri loglanır${C.reset}`);
+    console.log(`${C.dim}  ──────────────────────────────────────────────────────────${C.reset}`);
+    console.log();
+    console.log(`${C.dim}${'═'.repeat(62)}${C.reset}`);
+    console.log();
   });
 }
 
+// Testler vb. için hala asıl express uygulamasını dışa aktar, test frameworkleri zaten kendi http sarmalayıcısını kullanır
 module.exports = app;
