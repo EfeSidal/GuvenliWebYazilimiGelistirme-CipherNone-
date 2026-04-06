@@ -1,5 +1,9 @@
 # 🛡️ CipherNone: JWT "alg: none" Vulnerability & Hardening Lab
 
+![Security CI](https://github.com/EfeSidal/GuvenliWebYazilimiGelistirme-CipherNone-/actions/workflows/security.yml/badge.svg)
+![Semgrep](https://img.shields.io/badge/semgrep-p%2Fjwt-blue)
+![npm audit](https://img.shields.io/badge/npm%20audit-high%20risk%20monitored-brightgreen)
+
 [🇹🇷 Türkçe](#turkce) | [🇬🇧 English](#english)
 
 ---

@@ -1,0 +1,48 @@
+# 🛡️ CipherNone Security CI/CD Workflow
+# Bu workflow, her push ve pull request işleminde güvenlik taramaları ve testleri koşturur.
+
+name: Security CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  security-scan:
+    name: Security & Testing
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Adım: Repository kodunu CI ortamına çek
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      # 2. Adım: Node.js ortamını hazırla
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      # 3. Adım: Bağımlılıkları yükle
+      - name: Install Dependencies
+        run: npm install
+
+      # 4. Adım: Bağımlılıklardaki güvenlik açıklarını tara (npm audit)
+      # Yüksek veya kritik seviyeli bir açık varsa pipeline durur.
+      - name: Dependency Security Audit (npm audit)
+        run: npm audit --audit-level=high
+
+      # 5. Adım: Semgrep SAST Taraması
+      # JWT ile ilgili zafiyetleri (alg: none, zayıf sırlar vb.) tespit etmek için p/jwt kural kümesini kullanır.
+      - name: Semgrep Static Analysis (SAST)
+        uses: returntocorp/semgrep-action@v1
+        with:
+          config: "p/jwt"
+
+      # 6. Adım: Otomatik Güvenlik Testlerini Çalıştır (Jest)
+      # Mevcut testlerin (RS256, alg: none bypass tespiti vb.) CI üzerinde geçtiğinden emin ol.
+      - name: Run Security Tests (Jest)
+        run: npm test
