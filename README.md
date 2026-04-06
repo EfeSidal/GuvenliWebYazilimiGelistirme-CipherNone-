@@ -26,6 +26,29 @@ Uygulamanın şifreleme ve yetki güvenliklerini denetleyen otomatik test takım
 ```bash
 npm test
 ```
+
+### 📊 Test Kapsamı
+Projede JWT güvenlik mekanizmalarını doğrulamak için Jest + Supertest ile 4 adet otomatik test yazıldı.
+
+- ✅ Geçerli HS256 admin token ile /admin erişimi
+- ✅ alg: none saldırısının tespiti ve engellenmesi
+- ✅ Algorithm Confusion (RS256 alg + HS256 imza) saldırısının engellenmesi
+- ✅ User rolü ile admin erişiminin reddedilmesi
+
+![Security Test 1](screenshots/test1.png)
+![Security Test 2](screenshots/test2.png)
+![Security Test 3](screenshots/test3.png)
+![Security Test 4 - Jest Summary](screenshots/test4.png)
+
+### 🏭 Production İçin Geliştirme Önerileri
+- JWT algoritması olarak HS256 yerine RS256 (asymmetric keys) kullanılması
+- Düzenli key rotation mekanizması
+- Short-lived access token + Refresh token sistemi
+- Rate limiting’in production seviyesinde yapılandırılması
+- Daha gelişmiş logging ve monitoring (Winston + Prometheus gibi)
+- Multi-stage Docker build ve non-root user kullanımı
+- Gerçek SSL sertifikası (Let’s Encrypt) entegrasyonu
+
 ### 🛠 Kullanım (PoC)
 
 **1. Zafiyetli Sunucuyu Başlatın:**
@@ -75,6 +98,29 @@ To run the automated security tests verifying JWT protections and logic:
 ```bash
 npm test
 ```
+
+### 📊 Test Coverage
+4 automated tests were written using Jest + Supertest to verify JWT security mechanisms in the project.
+
+- ✅ Accessing /admin with a valid HS256 admin token
+- ✅ Detection and prevention of the alg: none attack
+- ✅ Prevention of the Algorithm Confusion (RS256 alg + HS256 signature) attack
+- ✅ Rejection of admin access with the User role
+
+![Security Test 1](screenshots/test1.png)
+![Security Test 2](screenshots/test2.png)
+![Security Test 3](screenshots/test3.png)
+![Security Test 4 - Jest Summary](screenshots/test4.png)
+
+### 🏭 Recommendations for Production Use
+- Using RS256 (asymmetric keys) instead of HS256 as the JWT algorithm
+- Regular key rotation mechanism
+- Short-lived access token + Refresh token system
+- Configuring rate limiting at a production level
+- More advanced logging and monitoring (e.g., Winston + Prometheus)
+- Multi-stage Docker build and non-root user implementation
+- Real SSL certificate (Let's Encrypt) integration
+
 ### 🛠 Usage (PoC)
 
 **1. Start the Vulnerable Server:**
