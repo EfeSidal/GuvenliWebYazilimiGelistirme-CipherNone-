@@ -6,9 +6,25 @@
 
 const express = require('express');
 const jwt = require('jsonwebtoken');
+const rateLimit = require('express-rate-limit');
 const app = express();
 
 app.use(express.json());
+
+// ─── Rate Limiting Mekanizması ────────────────────────────────────────────────
+const apiLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 dakika
+  max: 100, // 15 dakika içinde en fazla 100 istek
+  message: {
+    success: false,
+    message: 'Çok fazla istek attınız, lütfen daha sonra tekrar deneyiniz.'
+  },
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+
+// Limiti tüm endpoint'lere global olarak uygula
+app.use(apiLimiter);
 
 // ─── Sabitler ────────────────────────────────────────────────────────────────
 const PORT = 3001;
@@ -90,7 +106,7 @@ app.post('/login', (req, res) => {
 //   - Token alg:none dese bile, sunucu HS256 ile verify etmeye çalışır
 //   - İmza olmadığı için verify BAŞARISIZ olur → saldırı engellenir
 // ═══════════════════════════════════════════════════════════════════════════════
-// TODO: Rate limiting mekanizması (express-rate-limit) entegrasyonunu tamamla, brute-force koruması sağlansın.
+// ✅ Rate Limiting aktif edildi
 // FIXME: Kimlik ve yetki rollerini daha merkezi bir policy module'üne taşı (Role-based erişim kontrolü).
 /**
  * JSON Web Token (JWT) kimlik doğrulamasını sağlayan güvenli middleware.
