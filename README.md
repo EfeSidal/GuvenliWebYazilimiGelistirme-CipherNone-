@@ -25,12 +25,6 @@ Bu projede saldırgan, JWT'nin header kısmındaki algoritmayı `alg: none` olar
 * **Rate Limiting**: `express-rate-limit` ile Brute-Force saldırılarına karşı koruma katmanı eklendi.
 * **HTTPS/TLS**: Tüm trafik Self-Signed SSL sertifikası ile uçtan uca şifrelendi.
 
-### 🧪 Güvenlik Testlerini Çalıştırma
-Uygulamanın şifreleme ve yetki güvenliklerini denetleyen otomatik test takımını koşturmak için:
-```bash
-npm test
-```
-
 ### 📊 Test Kapsamı
 Projede JWT güvenlik mekanizmalarını doğrulamak için Jest + Supertest ile 4 adet otomatik test yazıldı.
 
@@ -44,119 +38,85 @@ Projede JWT güvenlik mekanizmalarını doğrulamak için Jest + Supertest ile 4
 ![Security Test 3](screenshots/test3.png)
 ![Security Test 4 - Jest Summary](screenshots/test4.png)
 
-### 🏭 Production İçin Geliştirme Önerileri
-- JWT algoritması olarak HS256 yerine RS256 (asymmetric keys) kullanılması
-- Düzenli key rotation mekanizması
-- Short-lived access token + Refresh token sistemi
-- Rate limiting’in production seviyesinde yapılandırılması
-- Daha gelişmiş logging ve monitoring (Winston + Prometheus gibi)
-- multi-stage Docker build ve non-root user kullanımı
-- Gerçek SSL sertifikası (Let’s Encrypt) entegrasyonu
+### 🎬 Demo
+Aşağıda, CipherNone laboratuvarının tüm özelliklerini içeren interaktif dashboard demosu yer almaktadır. Bu demo; zafiyetli API üzerindeki `alg:none` saldırısını, güvenli API'nin bu saldırıyı nasıl engellediğini ve Refresh Token rotasyonunu görsel olarak sunar.
 
-### 🔄 Refresh Token Sistemi (Yeni!)
-Modern uygulamalarda güvenliği artırmak için eklenen **Refresh Token** demosu (`src/refresh_token_demo.js`):
-- **Access Token (15 dk)**: Kısa ömürlü, her istekte gönderilen token.
-- **Refresh Token (7 gün)**: Uzun ömürlü, sadece yeni Access Token almak için kullanılan token.
-- **Revocation (Blacklist)**: Kullanıcı çıkış yaptığında (`/logout`), ilgili refresh token kara listeye alınır ve bir daha kullanılamaz.
+![CipherNone Dashboard Demo](./demo/project-demo.webp)
 
-**Demosunu Başlatmak İçin:**
+---
+
+## 🚀 Başlangıç (Getting Started)
+
+### 📦 Kurulum (Installation)
 ```bash
-node src/refresh_token_demo.js
+git clone https://github.com/EfeSidal/GuvenliWebYazilimiGelistirme-CipherNone-.git
+cd GuvenliWebYazilimiGelistirme-CipherNone-
+npm install
 ```
-*(Port: 3002)*
 
 ### 🛠 Kullanım (PoC)
 
 **1. Zafiyetli Sunucuyu Başlatın:**
 ```bash
-node vulnerable_api.js
+node src/vulnerable_api.js
 ```
 
 **2. Silahı Ateşleyin (Saldırı Aşaması):**
-
 ```bash
-node exploit.js
+node src/exploit.js
 ```
-
-*(Sonuç: Kurban API sahte token'ı yutar ve Admin yetkisi verir.)*
 
 **3. Güvenli Sunucuyu Test Edin (Savunma Aşaması):**
-
 ```bash
-node secure_api.js
+node src/secure_api.js
 ```
 
-*(`exploit.js` içindeki portu 3001 yapıp tekrar saldırın. Sonuç: 403 Forbidden - Saldırı Engellendi\!)*
-
------
+---
 
 <a id="english"></a>
-
 ## 🇬🇧 English
 
 **CipherNone** is an AppSec (Application Security) laboratory that practically demonstrates a critical authentication vulnerability commonly found in modern web architectures (REST APIs): the JWT Signature Bypass.
 
-In this project, an attacker performs an Authentication Bypass by changing the algorithm in the JWT header to `alg: none` and leaving the signature empty. The project provides evidence for both the exploitation of this vulnerability and how to patch it (Hardening) at the architectural level.
-
 ### 🚀 Project Contents
-
-  * **`vulnerable_api.js` (The Victim):** An intentionally flawed Node.js API that fails to check for "alg: none" and accepts unsigned tokens (Port: 3000).
-  * **`exploit.js` (The Weapon):** An attack script that generates a forged Base64Url JWT entirely from scratch without any external libraries, bypassing the victim API with "Admin" privileges.
-  * **`secure_api.js` (The Armor):** A hardened API built on Zero-Trust principles that strictly enforces the `HS256` algorithm and instantly rejects forged tokens (Port: 3001).
-
-### 🛡️ Advanced Security Features
-* **Unit Tests**: Automated security validation tests integrated using Jest and Supertest.
-* **Rate Limiting**: Brute-force protection layer added via `express-rate-limit`.
-* **HTTPS/TLS**: All traffic is end-to-end encrypted using a Self-Signed SSL certificate.
-
-### 🧪 Running Automated Tests
-To run the automated security tests verifying JWT protections and logic:
-```bash
-npm test
-```
+* **`vulnerable_api.js` (The Victim):** An intentionally flawed Node.js API that fails to check for "alg: none" and accepts unsigned tokens.
+* **`exploit.js` (The Weapon):** An attack script that generates a forged Base64Url JWT entirely from scratch, bypassing the victim API.
+* **`secure_api.js` (The Armor):** A hardened API built on Zero-Trust principles that strictly enforces the `RS256` algorithm.
 
 ### 📊 Test Coverage
-4 automated tests were written using Jest + Supertest to verify JWT security mechanisms in the project.
-
 - ✅ Accessing /admin with a valid HS256 admin token
 - ✅ Detection and prevention of the alg: none attack
-- ✅ Prevention of the Algorithm Confusion (RS256 alg + HS256 signature) attack
+- ✅ Prevention of the Algorithm Confusion attack
 - ✅ Rejection of admin access with the User role
 
-![Security Test 1](screenshots/test1.png)
-![Security Test 2](screenshots/test2.png)
-![Security Test 3](screenshots/test3.png)
-![Security Test 4 - Jest Summary](screenshots/test4.png)
+![Security Test Coverage](screenshots/test4.png)
 
-### 🏭 Recommendations for Production Use
-- Using RS256 (asymmetric keys) instead of HS256 as the JWT algorithm
-- Regular key rotation mechanism
-- Short-lived access token + Refresh token system
-- Configuring rate limiting at a production level
-- More advanced logging and monitoring (e.g., Winston + Prometheus)
-- Multi-stage Docker build and non-root user implementation
-- Real SSL certificate (Let's Encrypt) integration
+### 🎬 Demo
+Below is a comprehensive demo of the interactive CipherNone Dashboard. It showcases the `alg:none` exploit on the vulnerable API, the defense mechanisms of the secure API, and the Refresh Token rotation flow.
+
+![CipherNone Dashboard Demo](./demo/project-demo.webp)
+
+---
+
+## 🚀 Getting Started
+
+### 📦 Installation
+```bash
+npm install
+```
 
 ### 🛠 Usage (PoC)
+**1. Start the Vulnerable Server:** `node src/vulnerable_api.js`
+**2. Fire the Weapon:** `node src/exploit.js`
+**3. Test the Secure Server:** `node src/secure_api.js`
 
-**1. Start the Vulnerable Server:**
+---
 
-```bash
-node vulnerable_api.js
-```
+## 📜 Governance & Links
+- [📜 RoadMap](ROADMAP.md) - Project development plan and future goals.
+- [🤝 Contributing](CONTRIBUTING.md) - Rules and process for contributing.
+- [🔒 Security](SECURITY.md) - Security policy and vulnerability disclosure.
+- [🛠 Troubleshooting](TROUBLESHOOTING.md) - Common issues and solutions.
 
-**2. Fire the Weapon (Exploitation Phase):**
-
-```bash
-node exploit.js
-```
-
-*(Result: The victim API swallows the forged token and grants Admin privileges.)*
-
-**3. Test the Secure Server (Defense Phase):**
-
-```bash
-node secure_api.js
-```
 
 *(Change the port in `exploit.js` to 3001 and attack again. Result: 403 Forbidden - Attack Blocked\!)*

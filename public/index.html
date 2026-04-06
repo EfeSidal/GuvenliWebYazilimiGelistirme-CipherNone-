@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CipherNone | JWT AppSec Lab Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</head>
+<body class="dark-theme">
+    <div class="glass-bg"></div>
+    
+    <nav class="sidebar">
+        <div class="logo">
+            <span class="logo-icon">🛡️</span>
+            <h1>Cipher<span>None</span></h1>
+        </div>
+        <ul class="nav-links">
+            <li class="active" data-tab="dashboard">
+                <i class="fas fa-chart-line"></i> <span>Genel Bakış</span>
+            </li>
+            <li data-tab="vulnerable">
+                <i class="fas fa-user-secret"></i> <span>Zafiyetli Lab</span>
+            </li>
+            <li data-tab="secure">
+                <i class="fas fa-shield-alt"></i> <span>Güvenli Lab</span>
+            </li>
+            <li data-tab="refresh">
+                <i class="fas fa-sync-alt"></i> <span>Refresh Token</span>
+            </li>
+        </ul>
+        <div class="theme-toggle" id="themeToggle">
+            <i class="fas fa-moon"></i>
+            <span>Gece Modu</span>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <header class="top-bar">
+            <div class="search-bar">
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="Terminal komutunu ara...">
+            </div>
+            <div class="status-indicators">
+                <div class="status-item" id="status-3000">
+                    <span class="dot red"></span> Port 3000
+                </div>
+                <div class="status-item" id="status-3001">
+                    <span class="dot green"></span> Port 3001
+                </div>
+                <div class="status-item" id="status-3002">
+                    <span class="dot blue"></span> Port 3002
+                </div>
+            </div>
+        </header>
+
+        <section id="dashboard" class="tab-content active">
+            <div class="welcome-banner">
+                <h2>Hoş Geldiniz, <span class="highlight">Geliştirici!</span></h2>
+                <p>CipherNone; modern JWT zafiyetlerini (alg: none) ve bunlara karşı kurumsal düzeyde savunma (RS256) stratejilerini simüle eden interaktif bir laboratuvardır.</p>
+            </div>
+            
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon red"><i class="fas fa-bug"></i></div>
+                    <div class="stat-info">
+                        <h3>Aktif Zafiyet</h3>
+                        <p>alg: none Bypass</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon green"><i class="fas fa-lock"></i></div>
+                    <div class="stat-info">
+                        <h3>Savunma Modu</h3>
+                        <p>RS256 Asimetrik</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon blue"><i class="fas fa-key"></i></div>
+                    <div class="stat-info">
+                        <h3>Token Yapısı</h3>
+                        <p>Access + Refresh</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="lab-overview">
+                <h3>Lab Akışı</h3>
+                <div class="flow-steps">
+                    <div class="step">
+                        <div class="step-num">1</div>
+                        <h4>Keşif</h4>
+                        <p>Kurban API'nin imzasız tokenları kabul ettiğini doğrula.</p>
+                    </div>
+                    <div class="arrow"><i class="fas fa-arrow-right"></i></div>
+                    <div class="step highlight-red">
+                        <div class="step-num">2</div>
+                        <h4>Exploit</h4>
+                        <p>Manüel olarak "alg:none" tokenı üretip sisteme sız.</p>
+                    </div>
+                    <div class="arrow"><i class="fas fa-arrow-right"></i></div>
+                    <div class="step highlight-green">
+                        <div class="step-num">3</div>
+                        <h4>Hardening</h4>
+                        <p>RS256 ve Whitelist ile saldırıyı kökten engelle.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Diğer Tablar JS ile doldurulacak -->
+        <section id="vulnerable" class="tab-content"></section>
+        <section id="secure" class="tab-content"></section>
+        <section id="refresh" class="tab-content"></section>
+
+        <div class="terminal-overlay" id="terminal">
+            <div class="terminal-header">
+                <span><i class="fas fa-terminal"></i> CipherNone CLI Log</span>
+                <div class="terminal-dots">
+                    <span></span><span></span><span></span>
+                </div>
+            </div>
+            <div class="terminal-body" id="terminalLog">
+                <div class="log-line">--- Terminal başlatıldı. API istekleri burada izlenebilir. ---</div>
+            </div>
+        </div>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
