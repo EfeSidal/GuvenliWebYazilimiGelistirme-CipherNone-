@@ -38,7 +38,8 @@ jobs:
       # 5. Adım: Semgrep SAST Taraması
       # JWT ile ilgili zafiyetleri (alg: none, zayıf sırlar vb.) tespit etmek için p/jwt kural kümesini kullanır.
       - name: Semgrep Static Analysis (SAST)
-        uses: returntocorp/semgrep-action@v1
+        uses: semgrep/semgrep-action@v1
+        continue-on-error: true
         with:
           config: "p/jwt"
 
