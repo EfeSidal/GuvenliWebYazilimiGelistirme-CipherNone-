@@ -5,6 +5,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.0.0] - 2026-04-07
+
+### Added
+- **Authentication**: Refresh token sistemi ve in-memory blacklist implementasyonu.
+- **Testing**: JWT zafiyetleri için case-variation (NONE, NoNe, none+boşluk vb.) bypass testleri eklendi.
+- **Documentation**: Proje yönetimi ve açık kaynak standartları için `CONTRIBUTING.md`, `SECURITY.md`, `TROUBLESHOOTING.md`, `ROADMAP.md` ve `CODE_OF_CONDUCT.md` dosyaları eklendi.
+- **Templates**: GitHub repoları için Bug Report ve Feature Request şablonları (`.github/ISSUE_TEMPLATE/`) eklendi.
+
+### Changed
+- **JWT Architecture (Breaking Change)**: Şifreleme mimarisi tamamen değiştirilerek JWT algoritması HS256'dan (simetrik) RS256'ya (asimetrik anahtar çifti) yükseltildi. *Not: Bu köklü değişiklik, eski sürümlerle üretilmiş tüm token'ların geçersiz sayılmasına neden olacaktır.*
+
+### Security
+- **CI/CD**: Kod analizini otomatize etmek için Semgrep SAST (p/jwt ruleset) pipeline'a entegre edildi.
+
 ## [1.2.0] - 2026-04-06
 
 ### Added
