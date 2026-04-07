@@ -1,4 +1,4 @@
-# Yol Haritası / Roadmap
+Yapılacaklar / TODO
 
 [🇹🇷 Türkçe](#turkce) | [🇬🇧 English](#english)
 
@@ -7,43 +7,45 @@
 <a id="turkce"></a>
 ## 🇹🇷 Türkçe
 
-**CipherNone**, sürekli gelişen bir uygulama güvenliği (AppSec) öğrenme platformudur. Aşağıda projenin geçmiş başarımları ve gelecekteki hedefleri yer almaktadır.
+**CipherNone**, sürekli gelişen bir uygulama güvenliği (AppSec) ve DevSecOps öğrenme platformudur. Aşağıda projenin geçmiş başarımları ve gelecekteki hedefleri yer almaktadır.
 
 ### ✅ Tamamlanan Kilometre Taşları
 
 | Versiyon | Tarih | Açıklama |
 | :--- | :--- | :--- |
-| **v1.0.0** | 2026-04-04 | **İlk Yayın**: Vulnerable API, `exploit.js` ve temel `HS256` hardening mekanizmaları. |
-| **v1.1.0** | 2026-04-05 | **Güvenlik Temelleri**: Rate limiting, HTTPS/TLS desteği ve Supertest/Jest unit test entegrasyonu. |
-| **v1.2.0** | 2026-04-06 | **Gelişmiş Zırh**: `RS256` asimetrik şifreleme, refresh token sistemi, Semgrep SAST CI ve gelişmiş JWT bypass testleri. |
+| **v1.0.0** | 2026-04-05 | **İlk Yayın**: Vulnerable API, `exploit.js` ve JWT "alg: none" temel zafiyet laboratuvarı. |
+| **v1.1.0** | 2026-04-06 | **Altyapı ve CI/CD**: Docker mimarisi, npm audit entegrasyonu, modüler refactoring. |
+| **v2.0.0** | 2026-04-07 | **Gelişmiş Zırh (Milestone)**: `RS256` asimetrik şifreleme, refresh token/blacklist sistemi, Semgrep SAST CI ve tam dokümantasyon seti. |
 
 ### 🚀 Gelecek Planları
 
 | Versiyon | Durum | Hedef |
 | :--- | :--- | :--- |
-| **v2.0.0** | 📅 Planlandı | **SQL Injection**: Zafiyetli SQL sorguları ve güvenli `prepared statements` örnekleri. |
-| **v2.1.0** | 📅 Planlandı | **Cross-Site Scripting (XSS)**: Reflected/Stored XSS zafiyetleri ve `CSP` / `Sanitization` çözümleri. |
-| **v3.0.0** | 🔭 Uzun Vade | **OWASP Top 10 Full Series**: Tüm OWASP Top 10 kategorilerini kapsayan dev bir lab serisi oluşturulması. |
+| **v2.1.0** | 📅 Planlandı | **SQL Injection (SQLi)**: Zafiyetli veritabanı sorguları ve güvenli ORM / `prepared statements` savunma senaryoları. |
+| **v2.2.0** | 📅 Planlandı | **Cross-Site Scripting (XSS)**: Reflected/Stored XSS zafiyetleri ve gelişmiş `Content-Security-Policy (CSP)` çözümleri. |
+| **v2.3.0** | 📅 Planlandı | **API Güvenliği (OWASP API Top 10)**: BOLA (IDOR) ve Yetkilendirme atlatma zafiyetlerinin laboratuvar ortamına eklenmesi. |
+| **v3.0.0** | 🔭 Uzun Vade | **OWASP Top 10 Full Series**: Tüm OWASP Top 10 kategorilerini ve DevSecOps süreçlerini kapsayan devasa bir AppSec ekosistemi oluşturulması. |
 
 ---
 
 <a id="english"></a>
 ## 🇬🇧 English
 
-**CipherNone** is an evolving application security (AppSec) learning platform. Below are the project's past milestones and future objectives.
+**CipherNone** is an evolving application security (AppSec) and DevSecOps learning platform. Below are the project's past milestones and future objectives.
 
 ### ✅ Completed Milestones
 
 | Version | Date | Description |
 | :--- | :--- | :--- |
-| **v1.0.0** | 2026-04-04 | **Initial Release**: Vulnerable API, `exploit.js`, and basic `HS256` hardening mechanisms. |
-| **v1.1.0** | 2026-04-05 | **Security Foundations**: Rate limiting, HTTPS/TLS support, and Supertest/Jest unit test integration. |
-| **v1.2.0** | 2026-04-06 | **Advanced Hardening**: `RS256` asymmetric encryption, refresh token system, Semgrep SAST CI, and advanced JWT bypass testing. |
+| **v1.0.0** | 2026-04-05 | **Initial Release**: Vulnerable API, `exploit.js`, and basic JWT "alg: none" vulnerability lab. |
+| **v1.1.0** | 2026-04-06 | **Infrastructure & CI/CD**: Docker architecture, automated npm audit, and modular refactoring. |
+| **v2.0.0** | 2026-04-07 | **Advanced Hardening (Milestone)**: `RS256` asymmetric encryption, refresh token/blacklist system, Semgrep SAST CI, and full documentation suite. |
 
 ### 🚀 Future Roadmap
 
 | Version | Status | Objective |
 | :--- | :--- | :--- |
-| **v2.0.0** | 📅 Planned | **SQL Injection**: Vulnerable SQL queries and secure `prepared statements` examples. |
-| **v2.1.0** | 📅 Planned | **Cross-Site Scripting (XSS)**: Reflected/Stored XSS vulnerabilities and `CSP` / `Sanitization` solutions. |
-| **v3.0.0** | 🔭 Long-term | **OWASP Top 10 Full Series**: Creating a massive lab series covering all OWASP Top 10 categories. |
+| **v2.1.0** | 📅 Planned | **SQL Injection (SQLi)**: Vulnerable database queries and secure ORM / `prepared statements` defense scenarios. |
+| **v2.2.0** | 📅 Planned | **Cross-Site Scripting (XSS)**: Reflected/Stored XSS vulnerabilities and advanced `Content-Security-Policy (CSP)` solutions. |
+| **v2.3.0** | 📅 Planned | **API Security (OWASP API Top 10)**: Introduction of BOLA (IDOR) and Broken Object Level Authorization labs. |
+| **v3.0.0** | 🔭 Long-term | **OWASP Top 10 Full Series**: Creating a massive AppSec ecosystem covering all OWASP Top 10 categories integrated with DevSecOps pipelines. |
