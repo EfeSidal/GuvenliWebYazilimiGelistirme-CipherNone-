@@ -6,6 +6,21 @@
 
 [🇹🇷 Türkçe](#turkce) | [🇬🇧 English](#english)
 
+<p align="center">
+  <img src="istinye-logo.png" alt="İstinye Üniversitesi" width="220"/>
+</p>
+
+
+### 👤 Proje Bilgileri
+
+| | |
+|---|---|
+| **Öğrenci** | Efe Sidal |
+| **Danışman Hoca** | Keyvan Arasteh |
+| **Üniversite** | İstinye Üniversitesi |
+| **Bölüm** | Bilişim Güvenliği Teknolojisi |
+| **Ders** | Güvenli Web Yazılımı Geliştirme |
+
 ---
 
 <a id="turkce"></a>
@@ -81,6 +96,23 @@ node src/secure_api.js
 ```
 
 ---
+
+
+<p align="center">
+  <img src="istinye-logo.png" alt="İstinye Üniversitesi" width="220"/>
+</p>
+
+
+### 👤 Project Info
+
+| | |
+|---|---|
+| **Student** | Efe Sidal |
+| **Instructor** | Keyvan Arasteh |
+| **University** | Istinye University |
+| **Department** | Information Security Technology |
+| **Course** | Secure Web Software Development |
+
 
 <a id="english"></a>
 ## 🇬🇧 English
