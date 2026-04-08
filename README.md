@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="istinye-logo.png" alt="İstinye Üniversitesi" width="220"/>
+</p>
+
 # 🛡️ CipherNone: JWT "alg: none" Vulnerability & Hardening Lab
 
 ![Security CI](https://github.com/EfeSidal/GuvenliWebYazilimiGelistirme-CipherNone-/actions/workflows/security.yml/badge.svg)
@@ -6,9 +10,6 @@
 
 [🇹🇷 Türkçe](#turkce) | [🇬🇧 English](#english)
 
-<p align="center">
-  <img src="istinye-logo.png" alt="İstinye Üniversitesi" width="220"/>
-</p>
 
 
 ### 👤 Proje Bilgileri
